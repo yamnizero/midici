@@ -13,9 +13,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+ late int index;
+  bool filter =false;
+
+  //--------------------------------//
   List<CategoryWithProduct> listCategory = [];
-
-
   getCategory()async{
     listCategory.clear();
     var uriCategory = Uri.parse(BASEURL.categoryWithProduct);
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       getProduct();
     }
   }
-
+//---------------------------------//
 List<ProductModel> listProduct = [];
   getProduct() async {
     listProduct.clear();
@@ -112,31 +114,62 @@ List<ProductModel> listProduct = [];
               itemCount: listCategory.length,
               shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 10
                 ),
                 itemBuilder: (context, i){
                   final x = listCategory[i];
-                  return CardCategory(
-                      imageCatrgory: x.image,
-                      nameCatrgory: x.category,
+                  return InkWell(
+                    onTap: (){
+                      setState(() {
+                        index = i;
+                        filter = true;
+                        print("$index,$filter");
+                      });
+                    },
+                    child: CardCategory(
+                        imageCatrgory: x.image,
+                        nameCatrgory: x.category,
+                    ),
                   );
                 }),
-            SizedBox(height: 24,),
-            GridView.builder(
+            SizedBox(height: 32,),
+        filter ?
+        index == 7
+        ?Text("Feature on progress"):
+        GridView.builder(
                 physics: ClampingScrollPhysics(),
-                itemCount: listProduct.length,
+                itemCount: listCategory[index].product!.length,
               shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:2
+                  crossAxisCount:2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16
                 ),
                 itemBuilder: (context, i){
-                  final y = listProduct[i];
+                  final y = listCategory[index].product![i];
                   return CardProduct(
                       imageProduct: y.imageProduct,
                       nameProduct: y.nameProduct,
                       price: y.price
                   );
-                }),
+                }):GridView.builder(
+            physics: ClampingScrollPhysics(),
+            itemCount: listProduct.length,
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount:2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16
+            ),
+            itemBuilder: (context, i){
+              final y = listProduct[i];
+              return CardProduct(
+                  imageProduct: y.imageProduct,
+                  nameProduct: y.nameProduct,
+                  price: y.price
+              );
+            }),
           ],
         ),
       ),

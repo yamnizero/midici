@@ -20,7 +20,7 @@ final String price;
         Image.network(
           imageProduct,
            width: 115,
-           height: 76,
+           height: 70,
         ),
           SizedBox(height: 16,),
           Text(

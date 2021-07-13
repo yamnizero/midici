@@ -3,20 +3,26 @@ class CategoryWithProduct{
     final String category;
     final String image;
     final String status;
+    final List<ProductModel>? product;
 
   CategoryWithProduct({
     required this.idCategory,
     required this.category,
     required this.image,
     required this.status,
+    this.product,
   });
 
   factory CategoryWithProduct.fromJson(Map<dynamic,dynamic> data){
+    var list = data['product'] as List;
+    List<ProductModel> listProduct =
+    list.map((e) => ProductModel.fromJson(e)).toList();
     return CategoryWithProduct(
         idCategory:data['idCategory'],
         category:data['category'],
         image:data['image'],
         status:data['status'],
+        product: listProduct
     );
   }
 }
@@ -30,6 +36,8 @@ class ProductModel {
   final String status;
   final String createdAt;
 
+
+
   ProductModel({
     required this.idProduct,
     required this.idCategory,
@@ -39,9 +47,11 @@ class ProductModel {
     required this.price,
     required this.status,
     required this.createdAt,
+
   });
 
   factory ProductModel.fromJson(Map<dynamic,dynamic> data){
+
     return ProductModel (
       idProduct: data['id_product'],
       idCategory: data['id_category'],
