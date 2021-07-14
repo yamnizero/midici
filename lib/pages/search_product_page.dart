@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:medicine_2/network/api/url_api.dart';
 import 'package:medicine_2/network/model/product_model.dart';
 import 'package:medicine_2/widget/card_product.dart';
+import 'package:medicine_2/widget/widget_ilustration.dart';
 import '../theme.dart';
 import 'package:http/http.dart' as http;
+
+import 'detail_product.dart';
 
 class SearchProduct extends StatefulWidget {
   @override
@@ -37,7 +40,7 @@ class _SearchProductState extends State<SearchProduct> {
 
       });
     }else{
-      listSearchProduct.forEach((element) {
+      listProduct.forEach((element) {
         if(element.nameProduct.toLowerCase().contains(text)){
           listSearchProduct.add(element);
         }
@@ -82,8 +85,11 @@ class _SearchProductState extends State<SearchProduct> {
                       color: Color(0xffe4faf0),
                     ),
                     child: TextField(
+                      onChanged: searchProduct,
                        controller: searchController,
-                      decoration: InputDecoration(border:InputBorder.none,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        border:InputBorder.none,
                         prefixIcon: Icon(Icons.search,
                           color: Color(0xffb1d8b2),),
                         hintText: "Search medicine ...",
@@ -95,11 +101,21 @@ class _SearchProductState extends State<SearchProduct> {
                 ],
               ),
             ),
-            Container(
+            searchController.text.isEmpty || listSearchProduct.length == 0
+                ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 80),
+                  child: WidgetIlustraion(
+              title:"There is no medicine that is looking for" ,
+              image:"assets/no_data_ilustration.png" ,
+            subtitle1: "please find the product you want",
+              subtitle2: "the product will appear here",
+            ),
+                )
+            :Container(
               padding: EdgeInsets.all(24),
               child: GridView.builder(
                   physics: ClampingScrollPhysics(),
-                  itemCount: listProduct.length,
+                  itemCount: listSearchProduct.length,
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount:2,
@@ -107,11 +123,17 @@ class _SearchProductState extends State<SearchProduct> {
                       mainAxisSpacing: 16
                   ),
                   itemBuilder: (context, i){
-                    final y = listProduct[i];
-                    return CardProduct(
-                        imageProduct: y.imageProduct,
-                        nameProduct: y.nameProduct,
-                        price: y.price
+                    final y = listSearchProduct[i];
+                    return InkWell(
+                      onTap: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context)=>DetailProduct(y)));
+                      },
+                      child: CardProduct(
+                          imageProduct: y.imageProduct,
+                          nameProduct: y.nameProduct,
+                          price: y.price
+                      ),
                     );
                   }),
             ),

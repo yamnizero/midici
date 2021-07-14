@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:medicine_2/network/api/url_api.dart';
 import 'package:medicine_2/network/model/product_model.dart';
+import 'package:medicine_2/pages/detail_product.dart';
 import 'package:medicine_2/pages/search_product_page.dart';
 import 'package:medicine_2/theme.dart';
 import 'package:medicine_2/widget/card_category.dart';
@@ -155,10 +156,16 @@ List<ProductModel> listProduct = [];
                 ),
                 itemBuilder: (context, i){
                   final y = listCategory[index].product![i];
-                  return CardProduct(
-                      imageProduct: y.imageProduct,
-                      nameProduct: y.nameProduct,
-                      price: y.price
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>DetailProduct(y)));
+                    },
+                    child: CardProduct(
+                        imageProduct: y.imageProduct,
+                        nameProduct: y.nameProduct,
+                        price: y.price
+                    ),
                   );
                 })
             :GridView.builder(
@@ -172,10 +179,16 @@ List<ProductModel> listProduct = [];
             ),
             itemBuilder: (context, i){
               final y = listProduct[i];
-              return CardProduct(
-                  imageProduct: y.imageProduct,
-                  nameProduct: y.nameProduct,
-                  price: y.price
+              return InkWell(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>DetailProduct(y)));
+                },
+                child: CardProduct(
+                    imageProduct: y.imageProduct,
+                    nameProduct: y.nameProduct,
+                    price: y.price
+                ),
               );
             }),
           ],
