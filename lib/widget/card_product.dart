@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../theme.dart';
 
@@ -10,6 +11,7 @@ final String price;
    CardProduct({ required this.imageProduct, required this.nameProduct, required this.price});
   @override
   Widget build(BuildContext context) {
+    final priceFormat = NumberFormat("#,##0","EN_US");
     return Container(
       decoration:BoxDecoration(
         color: witheColor,
@@ -28,7 +30,7 @@ final String price;
             style: regulerTextStyle,textAlign: TextAlign.center,),
           SizedBox(height: 14,),
           Text(
-           price,
+           priceFormat.format(int.parse(price)),
             style: boldTextStyle,)
        ],
       ),
