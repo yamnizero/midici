@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medicine_2/theme.dart';
+import '../constants/theme.dart';
 
 class ButtonPrimary extends StatelessWidget {
   final String text;

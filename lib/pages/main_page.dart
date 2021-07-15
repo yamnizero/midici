@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medicine_2/pages/profile_page.dart';
-import 'package:medicine_2/theme.dart';
+import '../constants/theme.dart';
 
 import 'history_page.dart';
 import 'home_page.dart';

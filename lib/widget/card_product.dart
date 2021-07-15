@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../theme.dart';
+import '../constants/theme.dart';
 
 class CardProduct extends StatelessWidget {
 final String imageProduct;

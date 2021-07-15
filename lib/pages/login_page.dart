@@ -6,7 +6,7 @@ import 'package:medicine_2/widget/button_primery.dart';
 import 'package:medicine_2/widget/general_logo_space.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../theme.dart';
+import '../constants/theme.dart';
 import 'main_page.dart';
 import 'regiater_page.dart';
 

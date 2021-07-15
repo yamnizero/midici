@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:medicine_2/theme.dart';
+import '../constants/theme.dart';
 
 class WidgetIlustraion extends StatelessWidget {
 
