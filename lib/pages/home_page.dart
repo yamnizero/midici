@@ -8,6 +8,7 @@ import '../constants/theme.dart';
 import 'package:medicine_2/widget/card_category.dart';
 import 'package:http/http.dart' as http;
 import 'package:medicine_2/widget/card_product.dart';
+import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -83,7 +84,9 @@ List<ProductModel> listProduct = [];
                ],
              ),
              IconButton(
-                 onPressed: (){},
+                 onPressed: (){
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>CartPage()));
+                 },
                  icon: Icon(Icons.shopping_cart_rounded,
                  color: greenColor,
                  ),

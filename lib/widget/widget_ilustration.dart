@@ -35,13 +35,13 @@ class WidgetIlustraion extends StatelessWidget {
           children: [
             Text(
                subtitle1!,
-              style: regulerTextStyle.copyWith(fontSize: 22,color: greyLightColor),
+              style: regulerTextStyle.copyWith(fontSize: 18,color: greyLightColor),
 
             ),
             SizedBox(height: 9,),
             Text(
                 subtitle2!,
-              style: regulerTextStyle.copyWith(fontSize: 22,color: greyLightColor),
+              style: regulerTextStyle.copyWith(fontSize: 18,color: greyLightColor),
 
             ),
             SizedBox(height: 75),

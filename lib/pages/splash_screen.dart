@@ -43,7 +43,6 @@ class _SplashScreenState extends State<SplashScreen> {
       body: GeneralLogoSpace(
         child: Column(
           children: [
-            SizedBox(height: 45,),
             WidgetIlustraion(
               image: "assets/splash_ilustration.png",
               title: "Find your medical\n solution",
