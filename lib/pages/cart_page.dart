@@ -6,6 +6,7 @@ import 'package:medicine_2/network/api/url_api.dart';
 import 'package:medicine_2/network/model/cart_model.dart';
 import 'package:medicine_2/network/model/pref_profile.dart';
 import 'package:medicine_2/pages/main_page.dart';
+import 'package:medicine_2/pages/success.checkout.dart';
 import 'package:medicine_2/widget/button_primery.dart';
 import 'package:medicine_2/widget/widget_ilustration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -175,7 +176,10 @@ class _CartPageState extends State<CartPage> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              child: ButtonPrimary(text: "CHECKOUT NOW", onTap: () {}),
+              child: ButtonPrimary(text: "CHECKOUT NOW",
+                  onTap: () {
+                     checkout();
+                  }),
             ),
           ],
         ),
@@ -376,4 +380,25 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+
+
+  Future checkout() async{
+    var uriChekout =Uri.parse(BASEURL.checkout);
+    final response =await http.post(uriChekout,body: {
+      "idUser" : userID,
+    });
+    final data = jsonDecode(response.body);
+    int value = data['value'];
+    String message = data['message'];
+    if(value == 1) {
+         Navigator.pushAndRemoveUntil(
+             context, MaterialPageRoute(builder: (context)=>SuccessCheckout()),
+                 (route) => false);
+    }else{
+
+    }
+  }
+
+
+
 }
