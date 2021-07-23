@@ -9,6 +9,6 @@ class BASEURL {
   static String getProductCart = "http://$ipAddress:8080/medicine_db/get_cart.php?userID=";
   static String updateQuantityProductCart="http://$ipAddress:8080/medicine_db/update_quantity.php";
   static String totalPriceCart="http://$ipAddress:8080/medicine_db/get_total_price.php?userID=";
-
+  static String getTotalCart="http://$ipAddress:8080/medicine_db/total_cart.php?userID=";
 
 }

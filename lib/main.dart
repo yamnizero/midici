@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:medicine_2/pages/splash_screen.dart';
+
 import 'constants/theme.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

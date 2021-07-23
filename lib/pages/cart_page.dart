@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medicine_2/constants/theme.dart';
@@ -13,31 +12,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class CartPage extends StatefulWidget {
+  final VoidCallback method;
+  CartPage(this.method);
   @override
   _CartPageState createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
   final price =NumberFormat("#,##0","EN_US");
-  String? userID, fullName, address, phone;
+  late String userID, fullName, address, phone;
   int delivery = 0;
 
   getPref() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
-      userID = sharedPreferences.getString(PrefProfile.idUser);
-      fullName = sharedPreferences.getString(PrefProfile.name);
-      address = sharedPreferences.getString(PrefProfile.address);
-      phone = sharedPreferences.getString(PrefProfile.phone);
+      userID = sharedPreferences.getString(PrefProfile.idUser)!;
+      fullName = sharedPreferences.getString(PrefProfile.name)!;
+      address = sharedPreferences.getString(PrefProfile.address)!;
+      phone = sharedPreferences.getString(PrefProfile.phone)!;
     });
     getCart();
     cartTotalPrice();
   }
 
   List<CartModel> listCart = [];
-  getCart() async {
+   Future getCart() async {
     listCart.clear();
-    var urlGetCart = Uri.parse(BASEURL.getProductCart + userID!);
+    var urlGetCart = Uri.parse(BASEURL.getProductCart + userID);
     final response = await http.get(urlGetCart);
     if (response.statusCode == 200) {
       setState(() {
@@ -51,30 +52,36 @@ class _CartPageState extends State<CartPage> {
 
 
 
-  updateQuantity(String write,String model) async {
-    var urlupdateQuantity = Uri.parse(BASEURL.updateQuantityProductCart);
-      final response = await http.post(urlupdateQuantity,body:{
+  Future updateQuantity(String model,String write) async {
+    var urlUpdateQuantity = Uri.parse(BASEURL.updateQuantityProductCart);
+      final  response = await http.post(urlUpdateQuantity,body:{
         "cartID" : model,
-        "write" : write,
+        "write" : write
       } );
       final data = jsonDecode(response.body);
-      int value = data['vale'];
-      String message =data['message'];
+      int value = data['value'];
+      String message = data['message'];
       if(value == 1){
+        print(message);
         setState(() {
-            getCart();
+            getPref();
+            widget.method();
         });
       }else{
+        print(message);
         setState(() {
-          getCart();
+
+          getPref();
         });
       }
+
+
   }
 
   var sumPrice = "0";
   int totalPayment = 0;
-   cartTotalPrice() async {
-    var urlTotalPrice = Uri.parse(BASEURL.totalPriceCart + userID!);
+  Future  cartTotalPrice() async {
+    var urlTotalPrice = Uri.parse(BASEURL.totalPriceCart + userID);
     final response = await http.get(urlTotalPrice);
     if(response.statusCode == 200){
       final data = jsonDecode(response.body);
@@ -329,8 +336,9 @@ class _CartPageState extends State<CartPage> {
                                       IconButton(
                                           onPressed: () {
                                             updateQuantity(
-                                                'write',
-                                                x.idCart!);
+                                              x.idCart!,
+                                                'add',
+                                                );
                                           },
                                           icon: Icon(
                                             Icons.add_circle,
@@ -340,8 +348,8 @@ class _CartPageState extends State<CartPage> {
                                       IconButton(
                                           onPressed: () {
                                             updateQuantity(
-                                                'less',
-                                                x.idCart!);
+                                              x.idCart!, 'less',
+                                                );
                                           },
                                           icon: Icon(
                                             Icons.remove_circle,
