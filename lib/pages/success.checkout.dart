@@ -5,7 +5,6 @@ import 'package:medicine_2/widget/general_logo_space.dart';
 import 'package:medicine_2/widget/widget_ilustration.dart';
 
 class SuccessCheckout extends StatelessWidget {
-  const SuccessCheckout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

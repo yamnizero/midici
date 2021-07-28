@@ -388,6 +388,8 @@ class _CartPageState extends State<CartPage> {
       "idUser" : userID,
     });
     final data = jsonDecode(response.body);
+    print(data);
+
     int value = data['value'];
     String message = data['message'];
     if(value == 1) {
